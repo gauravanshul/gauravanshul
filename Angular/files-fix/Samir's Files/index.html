@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="goldenpi">
+
+<head>
+    <link type="text/css" rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css"></link>
+    <link type="text/css" rel="stylesheet" href="css/app.css"></link>
+    <script src="vendor/angular-1.6.4/angular.js"></script>
+    <script src="vendor/angular-1.6.4/angular-resource.js"></script>
+    <script src="vendor/angular-ui1.0.3/angular-ui-router.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services/lb-services.js"></script>
+    <script src="js/services/auth.js"></script>
+    <script src="js/controllers/header.js"></script>
+    <script src="js/controllers/login.js"></script>
+    <script src="js/controllers/logout.js"></script>
+    <script src="js/controllers/invest-purpose.js"></script>
+    <script src="js/controllers/order-summary.js"></script>
+    <script src="js/controllers/explore-instruments.js"></script>
+    <script src="js/controllers/portfolio-summary.js"></script>
+    <script src="js/controllers/simple-popup.js"></script>
+    <script src="js/misc/scroll.js"></script>
+</head>
+
+<body>
+    <header ng-controller="HeaderController">
+        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 header-wrapper">
+            <div class="logo-wrapper">
+                <img class="img-responsive logo" src="images/logo.png" alt="logo" />
+            </div>
+            <div class="logout-wrapper {{ state ? 'hide':'show'}}" ng-show="currentUser">
+                <div class="logout-image"><img src="/images/user-icon.png" class="img-responsive" alt="logout-image" ng-model="userIconClicked" ng-click="showHideMainMenu()" /></div>
+                <ul style="display: {{mainMenuVisible}}">
+                    <li ng-show="currentUser">
+                        <a ui-sref="portfolioSummary">My Portfolio</a>
+                    </li>
+                    <li ng-show="currentUser">
+                        <a ui-sref="investmentPurpose">Guided Investment</a>
+                    </li>
+                    <li ng-show="currentUser">
+                        <a ui-sref="exploreInstruments">Explore All Options</a>
+                    </li>
+                    <li ng-show="currentUser">
+                        <a ui-sref="logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </header>
+
+    <!-- main view-->
+    <main ui-view></main>
+
+    <footer>
+        <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 footer-wrap">
+            <p>&copy; GoldenPi Technologies Private Limited </p>
+        </div>
+    </footer>
+</body>
+
+</html>

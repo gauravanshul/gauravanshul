@@ -1,0 +1,156 @@
+<section>
+    <div class="col-sm-6 col-xs-6 col-lg-6 col-md-6 col-xs-offset-5 col-md-offset-5 col-lg-offset-5 add-order">
+      <button class="green-btn order-list">Add To Order List</button>
+    </div>
+    <div class="clr"></div>
+    <div class="col-sm-10 col-xs-10 col-lg-10 col-md-10 col-lg-offset-1 col-xs-offset-1 col-md-offset-1 explore-cont">
+        <div class="col-sm-3 col-lg-3 col-md-3 explore-filter" id="explore-fil" >
+            <div class="filters-head">
+                <button class="green-btn apply-filter" ng-click="applyFilter($event)">Apply Filters</button>
+            </div>
+            <div class="type-instrument">
+                <h4>Type Of Instrument</h4>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-one" ng-click="getBondType($event)" ng-model='Government' value="Government" />
+                    <label for="checkbox-one">
+                        Government Securities/Deposits
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-two" ng-click="getBondType($event)" ng-model='Corporate' value="Corporate" />
+                    <label for="checkbox-two">
+                        Corporate Debentures/Bonds
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-three" ng-click="getBondType($event)" ng-model='CompanyFD' value="CompanyFD" />
+                    <label for="checkbox-three">
+                        Corporate Fixed Deposits
+                    </label>
+                </div>
+            </div>
+            <div class="tenure-wrap range-slider">
+                <h4>Tenure (years)</h4>
+                <br>
+                <input type="range" class="range-slider__range" min="1" max="10" steps="1" value="1" ng-model="selectedTenure" ng-change="calculateRange()"
+                />
+                <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+                    <ul class="return-year-label">
+                        <li>1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                        <li>6</li>
+                        <li>7</li>
+                        <li>8</li>
+                        <li>9</li>
+                        <li>10</li>
+                    </ul>
+                    <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="annual-returns">
+                <h4>Min. Annual Returns(%)</h4>
+                <input type="text" class="tenure-inv input-text" ng-model="selectedReturn" value="0" ng-change="calculateRange()" />
+            </div>
+            <div class="type-instrument">
+                <h4>Credit Rating</h4>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-aaa" ng-click="getCurrentRating($event)" ng-model="Rating_AAA" value="Rating_AAA"/>
+                    <label for="checkbox-aaa">
+                        AAA
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-aa" ng-click="getCurrentRating($event)" ng-model="Rating_AA" value="Rating_AA"/>
+                    <label for="checkbox-aa">
+                        AA
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" id="checkbox-a" ng-click="getCurrentRating($event)" ng-model="Rating_A" value="Rating_A"/>
+                    <label for="checkbox-a">
+                        A
+                    </label>
+                </div>
+            </div>
+            <!--
+            <div class="credit-rating">
+                <h4>Credit Rating</h4>
+                <button type="button" class="rating" ng-click="getCurrentRating($event)" data-rating="AAA">AAA</button>
+                <button type="button" class="rating" ng-click="getCurrentRating($event)" data-rating="AA">AA</button>
+                <button type="button" class="rating" ng-click="getCurrentRating($event)" data-rating="A">A</button>
+            </div>
+            -->
+        </div>
+        <div class="col-sm-9 col-md-9 col-lg-9 explore-wrap">
+            <div class="col-sm-6 col-md-6 col-lg-6 inv-offer-tile" ng-repeat="item in filteredInstruments track by $index">
+                <div class="col-sm-11 col-md-11 col-lg-11 tile-wrap" data-bond-type="{{item.BClass}}">
+                    <div class="offer-inv-name">
+                        <input type="checkbox" class="bond-type" ng-click="selectBond($event, $index)" id="checkbox-{{$index}}" onchange="isSelected"> <label for ="checkbox-{{$index}}"> {{getInstrumentTypeText($index)}}</label>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            Issue Name
+                        </span>
+                        <span class="text-right" data-issuer-name="{{item.BondName}}" title={{item.BondName}}>
+                            {{item.BondName}}
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            Credit Rating
+                        </span>
+                        <span class="text-right">
+                            <button type="button" class="rating" data-credit-rating="{{item.CreditRatingStr}}">{{item.CreditRatingStr}}</button>
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            Annual Return
+                        </span>
+                        <span class="text-right" data-return="{{item.YTM}}">
+                            {{item.YTM}}%
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            Payment Frequency
+                        </span>
+                        <span class="text-right" data-frequency="{{item.PaymentFreq}}">
+                            {{getPaymentFreq(item.PaymentFreq)}}
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            {{getLTPText($index)}}
+                        </span>
+                        <span class="text-right" data-ltp="{{item.LTP}}">
+                            {{item.LTP}}
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                            Maturity Date
+                        </span>
+                        <span class="text-right" data-maturity="{{item.MaturityDate}}">
+                            {{item.MaturityDate}}
+                        </span>
+                    </div>
+                    <div class="inv-det">
+                        <span class="text-left">
+                        </span>
+                        <span class="text-right">
+                            <a href=""> View Details </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center no-instr {{noInstruments?'visible':'no'}}">
+                {{noInstruments}}
+            </div>
+        </div>
+    </div>
+</section>

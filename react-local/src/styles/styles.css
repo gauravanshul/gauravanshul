@@ -1,0 +1,12 @@
+#app {
+    font-size: 16px;
+    font-family: Verdana;
+    color: #cc0001;
+    margin: 0 auto;
+}
+a.active {
+    color: orange;
+}
+nav {
+    padding-top: 20px;
+}

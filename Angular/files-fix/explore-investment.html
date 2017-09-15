@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html ng-app="goldenpi">
+  <head>
+    <link type="text/css" rel="stylesheet" href="library/css/bootstrap.min.css"></link>
+    <link type="text/css" rel="stylesheet" href="assets/css/app.css"></link>
+    <script src="library/js/angular.min.js"></script>
+    <script src="library/js/bootstrap.min.js"></script>
+    <script src="assets/js/scroll.js" type="text/javascript"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/header.js"></script>
+    <script src="assets/js/explore.js"></script>
+  </head>
+  <body>
+    <header ng-controller="headerController">
+      <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 header-wrapper">
+        <div class="logo-wrapper ">
+          <img class="img-responsive logo" src="assets/images/logo.png" alt="logo" />
+        </div>
+        <div class="logout-wrapper {{ state ? 'hide':'show'}}">
+          <div class="logout-image"><img src="assets/images/user-icon.png" class="img-responsive" alt="logout-image" ng-model="logoutClick" ng-click="showLogout()"/></div>
+          <ul style="display: {{logoutVisible}}">
+            <li><a class="logout-anchor" ng-click="optionsClick($event)">Explore bonds</a></li>
+            <li><a class="logout-anchor" ng-click="optionsClick($event)">Portfolio Summary</a></li>
+            <li><a class="logout-anchor" ng-click="optionsClick($event)">Logout</a>
+          </ul>
+        </div>
+        <div class="clr"></div>
+      </div>
+    </header>
+    <section ng-controller="exploreController" class="explore-cont">
+    <div class="col-sm-6 col-xs-6 col-lg-6 col-md-6 col-xs-offset-5 col-md-offset-5 col-lg-offset-5 add-order">
+      <button class="green-btn order-list">Add To Order List</button>
+    </div>
+      <div class="clr"></div>
+      <div class="col-sm-10 col-xs-10 col-lg-10 col-md-10 col-lg-offset-1 col-xs-offset-1 col-md-offset-1 explore-cont">
+        <div class="col-sm-3 col-lg-3 col-md-3 explore-filter" id="explore-fil" >
+          <div class="filters-head">
+            <button class="green-btn apply-filter" ng-click="showFilteredBonds($event)">Apply Filters</button>
+          </div>
+          <div class="type-instrument">
+            <h4>Type Of Instrument</h4>
+            <div class="checkbox">
+              <input type="checkbox" class="checkbox-elem" id="checkbox-one" ng-click="getBondType($event)" ng-model='Government' value="Government"/>
+              <label for="checkbox-one">
+                Government
+              </label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" class="checkbox-elem" id="checkbox-two" ng-click="getBondType($event)" ng-model='Corporate' value="Corporate"/>
+              <label for="checkbox-two">
+                Corporate
+              </label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" class="checkbox-elem" id="checkbox-three" ng-click="getBondType($event)" ng-model='CompanyFD' value="CompanyFD"/>
+              <label for="checkbox-three">
+                CompanyFD
+              </label>
+            </div>
+            <div class="checkbox">
+              <input type="checkbox" class="checkbox-elem" id="checkbox-four" ng-click="getBondType($event)" ng-model='Microloan' value="Microloan"/>
+              <label for="checkbox-four">
+                Microloan
+              </label>
+            </div>
+          </div>
+          <div class="tenure-wrap range-slider">
+            <h4>Tenure(in years)</h4>
+            <br>
+            <input type="range" class="range-slider__range" min="1" max="10" steps="1" value="1" ng-model="myValue" ng-change="calculateRange()"/>
+            <div class="col-sm-12 col-md-12 col-lg-12 no-padding">
+              <ul class="return-year-label">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+                <li>9</li>
+                <li>10</li>
+              </ul>
+              <div class="clr"></div>
+            </div>
+            <div class="clr"></div>
+          </div>
+          <div class="annual-returns">
+            <h4>Minimum Annualized Returns(%)</h4>
+            <input type="text" class="tenure-inv input-text" ng-model="returnValue" ng-blur="getReturnYear()" value="" />
+          </div>
+          <div class="credit-rating">
+            <h4>Credit Rating</h4>
+            <button type="button" class="rating cr-rate" ng-click="getCurrentRating($event)" data-rating="AAA">AAA</button>
+            <button type="button" class="rating cr-rate" ng-click="getCurrentRating($event)" data-rating="AAA+">AAA+</button>
+            <button type="button" class="rating cr-rate" ng-click="getCurrentRating($event)" data-rating="AA+">AA+</button>
+            <button type="button" class="rating cr-rate" ng-click="getCurrentRating($event)" data-rating="AA">AA</button>
+          </div>
+        </div>
+        <div class="col-sm-9 col-md-9 col-lg-9 explore-wrap">
+          <div class="col-sm-6 col-md-6 col-lg-6 inv-offer-tile" ng-repeat="item in exploreInvestment track by $index">
+            <div class="col-sm-11 col-md-11 col-lg-11 tile-wrap" data-bond-type="{{item.investmentType}}">
+              <div class="offer-inv-name">
+                <input type="checkbox" class="bond-type" id="checkbox-{{$index}}" onchange="isSelected"> <label for ="checkbox-{{$index}}">{{ item.bondType }}</label>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  Issuer Name
+                </span>
+                <span class="text-right" data-issuer-name="{{item.issuerName}}" title="{{item.issuerName}}">
+                  {{item.issuerName}}
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  Credit Rating
+                </span>
+                <span class="text-right">
+                  <button type="button" class="rating" data-credit-rating="{{item.creditRating}}">{{item.creditRating}}</button>
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  Annual Return %
+                </span>
+                <span class="text-right" data-return="{{item.annual}}">
+                  {{item.annualReturn}}%
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  Frequency
+                </span>
+                <span class="text-right" data-frequency="{{item.frequency}}">
+                  {{item.frequency}}
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  LTP
+                </span>
+                <span class="text-right" data-ltp="{{item.ltp}}">
+                  {{item.ltp}}
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                  Maturity Date
+                </span>
+                <span class="text-right" data-maturity="{{item.maturityDate}}">
+                  {{item.maturityDate}}
+                </span>
+              </div>
+              <div class="inv-det">
+                <span class="text-left">
+                </span>
+                <span class="text-right">
+                  <a href="#"> View Details </a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-12 col-lg-12 text-center no-instr {{noInstrument?'visible':'no'}}">
+            {{noInstrument}}
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="clr"></div>
+    <footer>
+      <div class="col-sm-12 col-xs-12 col-lg-12 col-md-12 footer-wrap">
+        <p>@ GoldenPI Technologies Private Limited </p>
+      </div>
+    </footer>
+  </body>
+</html>

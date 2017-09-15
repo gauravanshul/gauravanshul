@@ -1,0 +1,337 @@
+<section>
+    <div class="col-lg-12 col-sm-12 col-md-12 no-padding col-xs-12 summary-wrap" style="display: {{ noInst }}">
+        <div class="summary-container" style="display: {{ sugShow }}">
+            <div class="selected-plan-details">
+                <div class="heading">
+                    Amount
+                </div>
+                <div class="value">
+                    {{ getInputAmount() }}
+                </div>
+                <div class="heading">
+                    Tenure
+                </div>
+                <div class="value">
+                    {{ getInputTenure() }}
+                </div>
+                <div class="heading">
+                    Investment Purpose
+                </div>
+                <div class="value">
+                    {{ getInputPurpose() }}
+                </div>
+                <div class="heading">
+                    Other Details
+                </div>
+                <div class="value">
+                    {{ getInputOtherDetails() }}
+                </div>
+            </div>
+        </div>
+        <div class="suggested-portfolio-wrap">
+            <div class="col-sm-12 col-lg-12 col-md-12 tab-folio">
+                <a class="folio-type active" data-type="suggested-portfolio" ng-click="changeMode($event, true, true, null)">Suggested Portfolio</a>
+                <a class="folio-type" data-type="custom-portfolio" ng-click="changeMode($event, true, true, null)">Custom Portfolio</a>
+            </div>
+            <div class="clr"></div>
+            <div>
+                <div class="suggested-portfolio">
+                    <div class="info-risk" title="The risk associated with your folio is low">
+                        i
+                    </div>
+                    <div class="heading">
+                        Total Investment
+                    </div>
+                    <div class="value">
+                        {{ getOrderSummTotalInvestment() }}
+                    </div>
+                    <div class="heading">
+                        Value at Maturity
+                    </div>
+                    <div class="value">
+                        {{ getOrderSummMatValue() }}
+                    </div>
+                    <div class="heading">
+                        Return
+                    </div>
+                    <div class="value">
+                        {{ getOrderSummReturn() }} %
+                    </div>
+                    <div class="comp-fd">
+                        <a class="green-text comp-fd" simple-popup="templates/demo-1/template-1b.html">Compare With FD</a>
+                    </div>
+                </div>
+                <div class="explore-all-invest">
+                    <button class="green-btn"><a ng-click="exploreBonds()">Explore All Investment</a></button>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div style="display: {{ primShow }}">
+                <div class="instrument-details col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="display: {{ sugShow }}">
+                    <div class="instrument-heading-par">
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Maturity Date
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Name
+                        </div>
+                        <div class="col-sm-2 col-lg-2 col-xs-3 col-md-1">
+                            Issuer Name
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Return %
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Bid Price
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Units
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Investment
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Credit Rating
+                        </div>
+                        <div class="col-sm-2 col-lg-2 col-xs-3 col-md-2">
+                            Market
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-2 col-md-1">
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="instrument-wrapper" ng-repeat="item in details">
+                        <div class="instrument-heading">
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.MaturityDate}}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.BondName}}
+                            </div>
+                            <div class="col-sm-2 col-lg-2 col-xs-3 col-md-1">
+                                {{ item.IssuerName }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.YTM }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ getOrderDetailsBidPrice($index) }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ getOrderDetailsUnits($index) }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.Investment }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.CreditRating }}
+                            </div>
+                            <div class="col-sm-2 col-lg-2 col-xs-3 col-md-2">
+                                {{ item.Market }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-2 col-md-1">
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="instrument-details custom-portfolio col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding" style="display: {{ custShow }}">
+                    <div class="instrument-heading-par" style="display: {{customHide}}">
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Maturity Date
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Name
+                        </div>
+                        <div class="col-sm-2 col-lg-2 col-xs-3 col-md-1">
+                            Issuer Name
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Return %
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Bid Price
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Units
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Investment
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                            Credit Rating
+                        </div>
+                        <div class="col-sm-2 col-lg-2 col-xs-3 col-md-2">
+                            Market
+                        </div>
+                        <div class="col-sm-1 col-lg-1 col-xs-2 col-md-1">
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="instrument-wrapper" ng-repeat="item in details">
+                        <div class="instrument-heading">
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.MaturityDate}}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.BondName}}
+                            </div>
+                            <div class="col-sm-2 col-lg-2 col-xs-3 col-md-1">
+                                {{ item.IssuerName }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.YTM }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                <input class="input-text custom-folio-text" type="text" ng-model="item.BidPrice" ng-change="activateRecompute()" ng-blur="bidPriceFocusChange($event, 'BidPrice', 0, $index)" ng-disabled="showHideBidPriceCtrls($index, 'BidPrice')"/>
+                                <span class="error hide" id="error">only positive numbers (upto 2 digits after decimal point)</span>
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                <input class="input-text custom-folio-text" type="text" ng-model="item.Units" ng-change="activateRecompute()" ng-blur="bidPriceFocusChange($event, 'Units', 0, $index)" ng-disabled="showHideBidPriceCtrls($index, 'Units')"/>
+                                <span class="error hide" id="error">only positive numbers</span>
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                <input class="input-text custom-folio-text total-inv" type="text" ng-model="item.Investment" ng-change="activateRecompute()" ng-blur="bidPriceFocusChange($event, 'Investment', item.FaceValue, $index)" ng-disabled="showHideBidPriceCtrls($index, 'Investment')" />
+                                <span class="error hide" id="format_error">only positive numbers (upto 2 digits after decimal point)</span>
+                                <span class="error hide" id="min_error">minimum investment amount is: {{item.FaceValue}}</span>
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-3 col-md-1">
+                                {{ item.CreditRating }}
+                            </div>
+                            <div class="col-sm-2 col-lg-2 col-xs-3 col-md-2">
+                                {{ item.Market }}
+                            </div>
+                            <div class="col-sm-1 col-lg-1 col-xs-2 col-md-1">
+                                <button class="delete-icon delete" ng-click="removeInstrument(item.id)" ></button>
+                            </div>
+                            <div class="clr"></div>
+                        </div>
+                    </div>
+                    <div class="no-folio-wrap" style="display: {{noFolio}}">
+                        <h3>No Portfolio found</h3>
+                        <button class="green-btn folio-btn" ng-click="exploreBonds()" >Explore All Options</button>
+                        <h4>or</h4>
+                        <button class="green-btn folio-btn last" ng-click="importSuggestedPortfolio()">Import Suggested Portfolio Summary</button>
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="condition" style="display: {{ primShow }}">
+                {{condition}}
+            </div>
+        </div>
+        <div class="reinvestment-wrap" style="display: {{ propShow }}">
+            <!-- <h4>Reinvestment Portfolio:</h4>
+            <div class="suggested-portfolio">
+              <div class="heading">
+                Total Investment
+              </div>
+              <div class="value">
+                {{ orderSummary.inputParameters.Amount }}
+              </div>
+              <div class="heading">
+                Value at Maturity
+              </div>
+              <div class="value">
+                {{ orderSummary.inputParameters.value }}
+              </div>
+              <div class="heading">
+                Return %
+              </div>
+              <div class="value">
+                {{ orderSummary.inputParameters.return }}
+              </div>
+            </div> -->
+            <div class="reinvestment-detail">
+                <div class="col-lg-10 col-xs-12 col-md-10 col-sm-10 no-padding reinv-shadow">
+                    <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 heading-wrap">
+                        <div class="col-sm-1 col-lg-1 col-md-1 amount-div">
+                            Amount
+                        </div>
+                        <div class="col-sm-2 col-lg-2 col-md-2 year-div" ng-repeat="item in dateRange">
+                            {{ item }}
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 investment-table-wrap" ng-repeat="item in details">
+                        <div class="amount-wrap col-sm-1 col-md-1">
+                            {{ item.Investment }}
+                        </div>
+                        <div class="col-sm-11 col-md-11 col-lg-11 reinv-value-wrap">
+                            <div class="fund-name">
+                                {{ item.BondName }}
+                            </div>
+                            <div class="maturity-fund ma-{{ tenure - item.ReinvestmentYears}}">
+                                Maturity Amount = {{ item.MaturityAmount }}
+                            </div>
+                            <div class="reinvestment-maturity re-{{ item.ReinvestmentYears }}">
+                                {{ getReinvestmentMessage(item.MaturityAmount, item.ReinvestmentYears, item.MaturityDate) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <div class="no-padding pay-fut">
+                        Net Payments in {{ getPfolioMatYear() }}
+                    </div>
+                    <div ng-repeat="item in details">
+                        <div class="money-value">
+                            {{ getNetPayment(item.MaturityAmount, item.ReinvestmentYears) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div class="bottom-wrap">
+            <div class="return-port-wrap" style="display: {{ sugShow }}">
+                <button class="green-btn" ng-click="showreInvest()">{{ reInvest }}</button>
+            </div>
+            <div class="recompute-portfolio">
+                <button class="green-btn" ng-click="computePfolioReturn(getNoOfInstruments())" ng-disabled="recomputeActive">Recompute Portfolio</button>
+            </div>
+            <div class="place-order">
+                <button class="green-btn" ng-click="placeOrder()" >Place Order</button>
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div class="clr"></div>
+    </div>
+    <div class="col-lg-12 col-sm-12 col-md-12" style="display: {{ noInst }}">
+        {{ noInstrumentAvailable }}
+    </div>
+    <div class="pop-up">
+        <script type="text/ng-template" id="templates/demo-1/template-1b.html">
+          <section>
+            <div class="main-content" id="main">
+              <h3>Returns: My Portfolio vs Bank FD</h3>
+              <div class="bar-container col-sm-12 col-lg-12 col-md-12">
+                <div class="bar-wrap col-sm-3 col-md-3 col-lg-3">
+                  <span class="name">My portfolio</span>
+                  <div class="bar gold" style="height: {{(($parent.inputParameters.return > 10)?($parent.inputParameters.return)/2 : ($parent.inputParameters.return)) * 20}}px">{{ $parent.getOrderSummReturn() }}%</div>
+                </div>
+                <div class="bar-wrap col-sm-3 col-md-3 col-lg-3" ng-repeat = "item in $parent.fdDetails">
+                  <span class="name">{{item.instrumentName}}</span>
+                  <div class="bar" style="height: {{((item.return > 10)?(item.return)/2 : (item.return)) * 20}}px" style="height: {{item.return * 20}}px">{{ item.return }}%</div>
+                </div>
+              </div>
+            </div>
+            <footer>
+              <button class="popup-close right green-btn">Close</button>
+            </footer>
+
+          </section><!-- popup-screen -->
+
+          <section>
+            <h4>Find me</h4>
+            <div class="two subtitles clear">
+              <h5 class="go-to-screen-1 clickable">Postal Address</h5>
+            </div>
+            <footer>
+              <button class="popup-close right">close</button>
+            </footer>
+          </section>
+        </script>
+      </div>
+</section>
